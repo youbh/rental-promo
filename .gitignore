@@ -1,0 +1,5 @@
+# 이미지 원본 백업 (배포 불필요)
+_backup_images/
+
+# macOS
+.DS_Store

@@ -1,0 +1,698 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+      <title>쿠쿠 정수기+비데 패키지 특별전</title>
+      <style>
+        /* reset */
+        * {-webkit-text-size-adjust:none}
+        body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,code,form,fieldset,legend,textarea,p,blockquote,th,td,input,select,button{margin:0;padding:0}
+        fieldset,img{border:0 none}
+        dl,ul,ol,menu,li{list-style:none}
+        blockquote, q{quotes: none}
+        blockquote:before, blockquote:after,q:before, q:after{content:'';content:none}
+        input,select,textarea,button{vertical-align:middle}
+        input::-ms-clear{display:none}
+        button{border:0 none;background-color:transparent;cursor:pointer}
+        body{overflow-x:auto;min-width:320px;background:#fff}
+        body,th,td,input,select,textarea,button{font-size:14px;line-height:1.5;font-family:'Pretendard', AppleSDGothicNeo-Regular,'Malgun Gothic','맑은 고딕',sans-serif;color:#111;-webkit-font-smoothing:antialiased;-webkit-text-size-adjust:none}
+        a{color:#555;text-decoration:none}
+        h1{margin:0}
+        /* a:active, a:hover{text-decoration:underline} */
+        a:active{background-color:transparent}
+        address,caption,cite,code,dfn,em,var{font-style:normal;font-weight:normal}
+        /* global */
+        .screen_out{overflow:hidden;position:absolute;width:0;height:0;line-height:0;text-indent:-9999px}
+        .show{display:block}
+        .hide{display:none}
+        [hidden]{display:none !important}
+
+/* min-height:calc(100vh - 80px); */
+        .section_top{display:flex;flex-direction:column;align-items:center;padding:40px 0;background-color:#F1EDE6;box-sizing: border-box;}
+        .section_top .txt_top{display:inline-block;padding:8px 20px 6px;font-size:17px;font-weight:bold;letter-spacing:0.01em;line-height:1.2;color:#fff;text-shadow:0 1px 2px rgba(104,70,38,.35);background-image:linear-gradient(180deg,#e8cba3 0%,#d0a87c 42%,#b98d5f 78%,#a97c50 100%);border-radius:100px;box-shadow:inset 0 2px 1px rgba(255,255,255,.6),inset 0 -3px 6px rgba(120,82,45,.28),0 6px 16px rgba(160,118,74,.2)}
+        /* .section_top .tit_top{display:block;margin-top:8px;font-size:36px;font-weight:bold;line-height:46px;color:#c29c73} */
+        .section_top .tit_top{width:90%;padding-top:clamp(100px,58%,372px);max-width:580px;margin-top:18px;background:url(./tit_top.webp)no-repeat 0 0;background-size:contain;}
+        .section_top .txt_point{color:#692902}
+        .section_top .desc_top{position:relative;margin-top:18px;padding-bottom:22px;font-size:17px;font-weight:bold;line-height:1.4;letter-spacing:-0.02em;text-align:center;color:#94714A}
+        .section_top .desc_top:after{content:'';position:absolute;left:50%;bottom:4px;width:9px;height:9px;margin-left:-5px;border-right:2px solid #c29c73;border-bottom:2px solid #c29c73;border-radius:1px;transform:rotate(45deg);opacity:.75;animation:nudge_down 2.2s ease-in-out infinite}
+        @keyframes nudge_down{0%,100%{transform:rotate(45deg) translate(0,0)}50%{transform:rotate(45deg) translate(3px,3px)}}
+        /* .section_top .img_top{width:100%;margin-top:40px;padding-top:81%;background:url(./img_top.png)no-repeat center bottom;background-size:180%;} */
+        .section_top .img_top{position:relative;width:100%;max-width:630px;padding-top:clamp(100px,62%,392px);margin-top:clamp(20px,34%,200px);background:url(./bg_top.webp)no-repeat 0 center; background-size:contain}
+        .section_top .img_product{position:absolute}
+        .section_top .img_product1{top:-38%;right:52%;width:22%;max-width:532px;padding-top:45%;background:url(./img_product1.webp)no-repeat 0 0;background-size:contain;animation:float_product 5s ease-in-out infinite}
+        .section_top .img_product2{top:-32%;left:50%;width:36%;max-width:838px;padding-top:41%;background:url(./img_product2.webp)no-repeat 0 0;background-size:contain;animation:float_product 6s ease-in-out -1.5s infinite}
+        @keyframes float_product{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+        @media (prefers-reduced-motion:reduce){
+          .section_top .img_product1,.section_top .img_product2,.section_top .desc_top:after,.section_fix .box_selected,.section_fix .inner_selected.on_zero,.section_fix .txt_bonus{animation:none}
+        }
+
+        .section_fix{position:fixed;bottom:0;left:0;right:0;z-index:10;background-color:rgba(255,253,250,.1);backdrop-filter:blur(2px);-webkit-backdrop-filter:blur(2px)}
+        .section_fix .box_selected{position:relative;max-width:500px;margin:0 auto;padding:11px 20px 0;animation:open_pay .25s ease-out}
+        /* 요약바 위쪽에 살짝 걸치는 혜택 문구 - 페이지에서 유일한 짙은 덩어리로 확실히 튀게 */
+        .section_fix .txt_bonus{position:relative;display:block;padding:8px 14px 6px;font-size:16px;font-weight:bold;line-height:22px;letter-spacing:-0.03em;white-space:nowrap;color:#fff;background-image:linear-gradient(100deg,rgba(255,255,255,0) 42%,rgba(255,255,255,.34) 50%,rgba(255,255,255,0) 58%),linear-gradient(180deg,#9f7e59 0%,#994b1e 100%);background-size:300% 100%,100% 100%;background-position:0 0,0 0;border-radius:4px 4px 0 0;animation:sheen_bonus 3.2s ease-in-out infinite}
+        /* 오른쪽 위 모서리 리본 - 위/오른쪽으로 걸쳐 나오지만 box_selected 의 여백 안이라 레이아웃에 영향 없다 */
+        .section_fix .txt_bonus:before{content:'';position:absolute;top:-16px;right:-18px;width:54px;height:49px;background:url(./img_ribbon.webp)no-repeat 0 0;background-size:contain;filter:drop-shadow(0 2px 4px rgba(78,29,0,.35))}
+        .section_fix .txt_bonus .txt_bonus_small{display:block;font-size:14px;line-height:16px;}
+        .section_fix .txt_bonus .txt_point{font-weight:bold;color:#FFCE87}
+        @keyframes sheen_bonus{0%{background-position:0 0,0 0}55%,100%{background-position:100% 0,0 0}}
+        .section_fix .inner_selected{display:flex;align-items:center;justify-content:center;gap:2px;padding:8px 16px;background-color:#fff;box-shadow:0 4px 14px rgba(105,41,2,.12);border-radius: 0 0 4px 4px}
+        .section_fix .inner_selected.on_zero{animation:blink_zero 1s ease-in-out infinite}
+        @keyframes blink_zero{0%,100%{background-color:#fff}50%{background-color:#FFF5EA}}
+        .section_fix .desc_guide{padding:6px 10px;font-size:14px;font-weight:bold;line-height:17px;letter-spacing:-0.03em;text-align:center;color:#353535;background-color:#ffd3d3;border-radius:4px}
+        .section_fix .desc_guide .txt_point{font-weight:bold;color:#994b1e}
+        .section_fix .img_selected{flex:none;width:30px;height:30px}
+        .section_fix .txt_operator{flex:none;font-size:16px;font-weight:bold;line-height:1;color:#c29c73}
+        .section_fix .txt_total{flex:none;margin-left:2px;font-size:17px;font-weight:bold;letter-spacing:-0.03em;white-space:nowrap;color:#692902}
+        .section_fix .inner_fix{max-width:500px;margin:0 auto;padding:12px 20px calc(12px + env(safe-area-inset-bottom,0px));display:flex;gap:8px}
+        .section_fix .item_fix{display:flex;align-items:center;justify-content:center;gap:8px;flex:1;padding:12px 0;text-align:center;font-size:20px;font-weight:bold;letter-spacing:-0.02em;border-radius:100px;transition:transform .15s ease,box-shadow .15s ease}
+        .section_fix .item_fix:before{content:'';flex:none;width:22px;height:22px;background-repeat:no-repeat;background-position:center;background-size:contain}
+        .section_fix .btn_happycall:before{background-image:url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23ffffff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M4 16v-3.5a8 8 0 0 1 16 0V16'/><rect x='2.5' y='14' width='4.5' height='7' rx='2.25'/><rect x='17' y='14' width='4.5' height='7' rx='2.25'/></svg>")}
+        .section_fix .link_tel:before{background-image:url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23692902' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M21 16.9v2.6a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 1.1 3.8 2 2 0 0 1 3.1 1.6h2.6a2 2 0 0 1 2 1.7c.1 1 .3 1.9.7 2.8a2 2 0 0 1-.5 2.1L6.8 9.3a16 16 0 0 0 6 6l1.1-1.1a2 2 0 0 1 2.1-.5c.9.4 1.8.6 2.8.7a2 2 0 0 1 1.7 2z'/></svg>")}
+        .section_fix .item_fix:active{transform:translateY(1px)}
+        .section_fix .link_tel{background-color:#FFF5EA;color:#692902;box-shadow:inset 0 0 0 1px #E8D9C4}
+        .section_fix .btn_happycall{background-color:#c29c73;color:#fff;box-shadow:0 6px 16px rgba(194,156,115,.38)}
+
+        .section_calc{padding:48px 20px 110px;background-color:#FAF6F0}
+        .section_calc .tit_calc{position:relative;display:block;padding-bottom:16px;font-size:26px;font-weight:bold;line-height:1.35;letter-spacing:-0.03em;text-align:center;color:#692902}
+        .section_calc .tit_calc:after{content:'';position:absolute;left:50%;bottom:0;width:40px;height:3px;margin-left:-20px;border-radius:100px;background-color:#c29c73}
+        .section_calc .list_calc{display:flex;gap:44px;flex-direction:column;margin-top:32px;max-width:500px;margin-left:auto;margin-right:auto}
+
+        .section_calc .txt_step{display:inline-block;margin-top:0;padding:3px 12px;font-size:12px;font-weight:bold;letter-spacing:0.04em;text-transform:uppercase;background-color:#c29c73;color:#fff;border-radius:100px}
+        .section_calc .tit_calc_2{display:block;margin-top:10px;font-size:24px;font-weight:bold;letter-spacing:-0.03em;color:#692902}
+        .section_calc .desc_calc{margin-top:6px;font-size:15px;line-height:22px;letter-spacing:-0.02em;color:#9a8875}
+
+        .section_calc .list_product{display:flex;gap:10px;margin-top:18px;flex-direction:column}
+        .section_calc .list_product .btn_product{position:relative;min-height:92px;padding:10px 18px 10px 90px;text-align:left;background-color:#fff;border:1px solid #EEE7DC;border-radius:16px;box-shadow:0 2px 8px rgba(105,41,2,.04);transition:border-color .2s ease,box-shadow .2s ease,background-color .2s ease,transform .15s ease}
+        .section_calc .list_product .btn_product:hover{border-color:#DCCDB5;box-shadow:0 6px 16px rgba(105,41,2,.08)}
+        .section_calc .list_product .btn_product:active{transform:translateY(1px)}
+        .section_calc .list_product .btn_product.on{border-color:#c29c73;background-color:#FFFCF7;box-shadow:inset 0 0 0 1px #c29c73,0 6px 16px rgba(194,156,115,.2)}
+        .section_calc .list_product .btn_product.on .txt_name{color:#692902}
+        .section_calc .list_product .img_product{position:absolute;top:50%;left:8px;width:74px;height:74px;margin-top:-37px;filter:drop-shadow(0 3px 5px rgba(105,41,2,.13))}
+        .section_calc .list_product .txt_product{display:block;font-size:13px;font-weight:bold;letter-spacing:-0.02em;color:#c29c73}
+        .section_calc .list_product .txt_name{display:block;margin-top:2px;font-size:17px;font-weight:bold;line-height:23px;letter-spacing:-0.03em;color:#222}
+        .section_calc .list_product .desc_product_code{margin-top:2px;font-size:13px;letter-spacing:-0.01em;color:#a99b8a}
+
+        /* step3 제휴카드 - 이미지/카드명/연회비를 세로로 쌓고 그리드로 배치 */
+        .section_calc .list_card{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+        .section_calc .list_card .btn_product{min-height:0;padding:8px 6px 10px;text-align:center}
+        .section_calc .list_card .img_product{position:static;width:100%;height:82px;margin:0 0 2px}
+        .section_calc .list_card .txt_name{margin-top:0;font-size:14px;line-height:19px;letter-spacing:-0.04em}
+        /* 추천/최대할인 배지 - 레이아웃에 영향 없이 카드 좌측 상단에 얹는다 */
+        .section_calc .list_card .txt_badge{position:absolute;top:-8px;left:5px;z-index:2;padding:2px 9px;font-size:11px;font-weight:bold;line-height:15px;letter-spacing:-0.03em;white-space:nowrap;color:#fff;background-color:#c29c73;border-radius:100px}
+        /* 할인적용 기간 - 한 줄 고정 */
+        .section_calc .list_card .desc_period{margin-top:2px;font-size:12px;line-height:16px;letter-spacing:-0.05em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:#a99b8a}
+        .section_calc .list_card .btn_product.on .desc_period{color:#94714A}
+        @media (max-width:359px){
+          .section_calc .list_card{grid-template-columns:repeat(2,1fr)}
+        }
+        @media (min-width:768px){
+          .section_calc .list_card{grid-template-columns:repeat(4,1fr)}
+          .section_calc .list_card .img_product{height:92px}
+        }
+
+        /* step3 - 카드 선택 시 열리는 전월 실적 선택 영역 */
+        .section_calc .list_monthlypay{margin-top:20px;border-radius:16px;animation:open_pay .25s ease-out}
+        @keyframes open_pay{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:translateY(0)}}
+        .section_calc .tit_list_monthlypay{display:block;margin-bottom:10px;font-size:15px;font-weight:bold;letter-spacing:-0.03em;color:#692902}
+        .section_calc .list_pay{display:flex;flex-direction:column}
+        .section_calc .group_pay{display:flex;flex-direction:column;gap:8px}
+        .section_calc .group_pay + .group_pay{margin-top:14px;padding-top:14px;border-top:1px dashed #E3D7C5}
+        .section_calc .tit_group_pay{display:block;font-size:13px;font-weight:bold;letter-spacing:-0.03em;color:#c29c73}
+        .section_calc .btn_monthlypay{display:flex;align-items:center;justify-content:space-between;gap:10px;width:100%;padding:12px 16px;text-align:left;background-color:#fff;border:1px solid #EAE0D2;border-radius:12px;transition:border-color .2s ease,background-color .2s ease,box-shadow .2s ease,transform .15s ease}
+        .section_calc .btn_monthlypay:hover{border-color:#DCCDB5}
+        .section_calc .btn_monthlypay:active{transform:translateY(1px)}
+        .section_calc .btn_monthlypay.on{border-color:#c29c73;background-color:#FFFCF7;box-shadow:inset 0 0 0 1px #c29c73,0 4px 12px rgba(194,156,115,.18)}
+        .section_calc .tit_monthlypay{display:block;font-size:15px;font-weight:bold;letter-spacing:-0.03em;line-height:20px;color:#333}
+        .section_calc .btn_monthlypay.on .tit_monthlypay{color:#692902}
+        .section_calc .desc_monthlypay{flex:none;margin-top:0;font-size:15px;font-weight:bold;letter-spacing:-0.03em;line-height:20px;color:#c29c73}
+        @media (prefers-reduced-motion:reduce){
+          .section_calc .list_monthlypay{animation:none}
+        }
+
+        .img_product_CP_AQS100E{background:url(./product/CP-AQS100E.webp)no-repeat 0 0;background-size:contain}
+        .img_product_CP_AMS100E{background:url(./product/CP-AMS100E.webp)no-repeat 0 0;background-size:contain}
+        .img_product_CP_W602SW{background:url(./product/CP-W602SW.webp)no-repeat 0 0;background-size:contain}
+        .img_product_CP_W602HW{background:url(./product/CP-W602HW.webp)no-repeat 0 0;background-size:contain}
+        .img_product_CP_AKS011{background:url(./product/CP-AKS011.webp)no-repeat 0 0;background-size:contain}
+        .img_product_CBT_L1031W{background:url(./product/CBT-L1031W.webp)no-repeat 0 0;background-size:contain}
+        .img_product_CBT_KFFS31RW{background:url(./product/CBT-KFFS31RW.webp)no-repeat 0 0;background-size:contain}
+        .img_product_lotte{background:url(./card/lotte.webp)no-repeat center;background-size:contain}
+        .img_product_woori{background:url(./card/woori.webp)no-repeat center;background-size:contain}
+        .img_product_samsung{background:url(./card/samsung.webp)no-repeat center;background-size:contain}
+        .img_product_shinhan{background:url(./card/shinhan.webp)no-repeat center;background-size:contain}
+        .img_product_hyundai{background:url(./card/hyundai.webp)no-repeat center;background-size:contain}
+        .img_product_kb{background:url(./card/kb.webp)no-repeat center;background-size:contain}
+        .img_product_hana{background:url(./card/hana.webp)no-repeat center;background-size:contain}
+
+        /* 해피콜 신청 바텀시트 */
+        .layer_happycall{position:fixed;top:0;left:0;right:0;bottom:0;z-index:100}
+        .layer_happycall .dim_happycall{position:absolute;top:0;left:0;right:0;bottom:0;background-color:rgba(40,22,8,.5);animation:fade_dim .25s ease-out}
+        .layer_happycall .sheet_happycall{position:absolute;left:0;right:0;bottom:0;max-width:500px;margin:0 auto;max-height:92vh;display:flex;flex-direction:column;background-color:#fff;border-radius:20px 20px 0 0;animation:slide_sheet .3s cubic-bezier(.22,.61,.36,1)}
+        @keyframes fade_dim{from{opacity:0}to{opacity:1}}
+        @keyframes slide_sheet{from{transform:translateY(100%)}to{transform:translateY(0)}}
+
+        .layer_happycall .head_sheet{position:relative;flex:none;padding:20px 56px 14px 20px;border-bottom:1px solid #F1E9DC}
+        .layer_happycall .tit_sheet{display:block;font-size:20px;font-weight:bold;letter-spacing:-0.03em;color:#692902}
+        .layer_happycall .desc_sheet{margin-top:4px;font-size:14px;letter-spacing:-0.02em;color:#9a8875}
+        .layer_happycall .btn_close_sheet{position:absolute;top:16px;right:14px;width:34px;height:34px;background:url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%238A7461' stroke-width='2' stroke-linecap='round'><path d='M6 6l12 12M18 6L6 18'/></svg>")no-repeat center;background-size:22px 22px;border-radius:50%}
+        .layer_happycall .btn_close_sheet:hover{background-color:#FAF6F0}
+
+        .layer_happycall .body_sheet{flex:1 1 auto;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:20px 20px calc(20px + env(safe-area-inset-bottom,0px))}
+        .layer_happycall .item_form + .item_form{margin-top:14px}
+        .layer_happycall .tit_form{display:block;margin-bottom:6px;font-size:14px;font-weight:bold;letter-spacing:-0.03em;color:#444}
+        .layer_happycall .inp_form{width:100%;height:50px;padding:0 14px;font-size:16px;letter-spacing:-0.02em;color:#222;background-color:#fff;border:1px solid #E4DACA;border-radius:12px;box-sizing:border-box;transition:border-color .2s ease,box-shadow .2s ease}
+        .layer_happycall .inp_form::placeholder{color:#BDB0A0}
+        .layer_happycall .inp_form:focus{outline:0;border-color:#c29c73;box-shadow:0 0 0 3px rgba(194,156,115,.18)}
+        .layer_happycall .item_form.on_error .inp_form{border-color:#D5503C;box-shadow:0 0 0 3px rgba(213,80,60,.14)}
+        .layer_happycall .desc_error{display:none;margin-top:5px;font-size:13px;letter-spacing:-0.02em;color:#D5503C}
+        .layer_happycall .item_form.on_error .desc_error,.layer_happycall .box_agree.on_error .desc_error{display:block}
+
+        .layer_happycall .box_agree{margin-top:20px;padding:14px;background-color:#FAF6F0;border-radius:12px}
+        .layer_happycall .lab_agree{display:flex;align-items:flex-start;gap:9px;cursor:pointer}
+        .layer_happycall .inp_agree{flex:none;width:21px;height:21px;margin:0;appearance:none;-webkit-appearance:none;background-color:#fff;border:1px solid #DCCDB5;border-radius:6px;cursor:pointer;transition:background-color .15s ease,border-color .15s ease}
+        .layer_happycall .inp_agree:checked{background:#c29c73 url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23ffffff' stroke-width='3.4' stroke-linecap='round' stroke-linejoin='round'><path d='M5 12.5l5 5 9-10'/></svg>")no-repeat center;background-size:15px 15px;border-color:#c29c73}
+        .layer_happycall .txt_agree{font-size:14px;line-height:21px;letter-spacing:-0.03em;color:#444;word-break:keep-all}
+        .layer_happycall .box_agree.on_error .inp_agree{border-color:#D5503C}
+        .layer_happycall .btn_terms{display:flex;align-items:center;margin:8px 0 0 30px;padding:0;font-size:13px;letter-spacing:-0.02em;color:#94714A;text-decoration:underline;text-underline-offset:2px}
+        .layer_happycall .btn_terms:after{content:'';flex:none;width:6px;height:6px;margin-left:5px;border-right:1.2px solid #94714A;border-bottom:1.2px solid #94714A;transform:rotate(45deg) translate(-1px,-1px);transition:transform .2s ease}
+        .layer_happycall .btn_terms[aria-expanded="true"]:after{transform:rotate(-135deg) translate(-1px,-1px)}
+        .layer_happycall .box_terms{max-height:180px;margin-top:10px;padding:12px 13px;overflow-y:auto;font-size:12px;line-height:19px;letter-spacing:-0.02em;color:#6b5c4c;white-space:pre-line;background-color:#fff;border:1px solid #EFE7DB;border-radius:10px}
+
+        .layer_happycall .btn_submit{width:100%;margin-top:20px;padding:15px 0;font-size:18px;font-weight:bold;letter-spacing:-0.02em;color:#fff;background-color:#c29c73;border-radius:12px;box-shadow:0 6px 16px rgba(194,156,115,.38);transition:transform .15s ease,opacity .2s ease}
+        .layer_happycall .btn_submit:active{transform:translateY(1px)}
+
+        .layer_happycall .box_done{padding:24px 0 8px;text-align:center}
+        .layer_happycall .tit_done{display:block;font-size:20px;font-weight:bold;letter-spacing:-0.03em;color:#692902}
+        .layer_happycall .desc_done{margin-top:8px;font-size:15px;line-height:22px;letter-spacing:-0.02em;color:#9a8875}
+        .layer_happycall .btn_done{width:100%;margin-top:24px;padding:15px 0;font-size:18px;font-weight:bold;color:#692902;background-color:#FFF5EA;border-radius:12px;box-shadow:inset 0 0 0 1px #E8D9C4}
+        @media (prefers-reduced-motion:reduce){
+          .layer_happycall .dim_happycall,.layer_happycall .sheet_happycall{animation:none}
+        }
+      </style>
+  </head>
+  <body>
+    <div class="wrap_promotion">
+      <div class="section_top">
+        <span class="txt_top">10월 한정 혜택</span>
+        <div class="tit_top"><strong class="screen_out">우리 집 가전 지출 0원 프로젝트</strong></div>
+        <!-- <strong class="tit_top">정수기 비데 <span class="txt_point">둘 다</span> 렌탈해도<br/>월 렌탈료 <span class="txt_point">0원</span>인데<br/><span class="txt_point">지원금</span>까지?</strong> -->
+        <p class="desc_top">어떻게 0원이 되는지 직접 계산해보세요</p>
+        <div class="img_top">
+          <div class="img_product img_product1"></div>
+          <div class="img_product img_product2"></div>
+        </div>
+        <!-- <div class="img_top"></div> -->
+      </div>
+      <div class="section_calc">
+        <strong class="tit_calc">직접 계산해보세요</strong>
+        <div class="list_calc">
+          <div class="item_calc">
+            <span class="txt_step">step1</span>
+            <strong class="tit_calc_2">정수기 선택</strong>
+            <p class="desc_calc">종류별로 제일 잘 나가는 정수기를 가져왔어요<br/>원하는 정수기를 선택해주세요</p>
+            <div class="list_product" data-pick="water">
+              <button type="button" class="btn_product" data-rent="14900">
+                <div class="img_product img_product_CP_AKS011"></div>
+                <span class="txt_product">1인가구 정수 가성비 정수기</span>
+                <strong class="txt_name">살균 직수 정수기</strong>
+                <p class="desc_product_code">CP-AKS011</p>
+                <!-- 5년약정 1년단위 방문점검 기준 월렌탈료: 14900 / 수당: 134000 -->
+              </button>
+              <button type="button" class="btn_product" data-rent="38610">
+                <div class="img_product img_product_CP_AQS100E"></div>
+                <span class="txt_product">가정용 얼음정수기</span>
+                <strong class="txt_name">제로 100 미니 얼음 냉온정수기</strong>
+                <p class="desc_product_code">CP-AQS100E</p>
+                <!-- 5년약정 1년단위 방문점검 6개월반값 기준 월렌탈료: 38610 / 수당: 475000 -->
+              </button>
+              <button type="button" class="btn_product" data-rent="29610">
+                <div class="img_product img_product_CP_AMS100E"></div>
+                <span class="txt_product">가정용 냉.온.직수 정수기</span>
+                <strong class="txt_name">인스퓨어 미니100 초소형 정수기</strong>
+                <p class="desc_product_code">CP-AMS100E</p>
+                <!-- 5년약정 1년단위 방문점검 6개월반값 기준 월렌탈료: 29610 / 수당: 485000 -->
+              </button>
+              <button type="button" class="btn_product" data-rent="17900">
+                <div class="img_product img_product_CP_W602SW"></div>
+                <span class="txt_product">업소용 스텐드</span>
+                <strong class="txt_name">인스퓨어 냉온정수기 스탠드형</strong>
+                <p class="desc_product_code">CP-W602SW</p>
+                <!-- 5년약정 4개월단위 방문점검 기준 월렌탈료: 17900 / 수당: 191000 -->
+              </button>
+              <button type="button" class="btn_product" data-rent="16900">
+                <div class="img_product img_product_CP_W602HW"></div>
+                <span class="txt_product">업소용 하프</span>
+                <strong class="txt_name">인스퓨어 냉온정수기</strong>
+                <p class="desc_product_code">CP-W602HW</p>
+                <!-- 5년약정 4개월단위 방문점검 기준 월렌탈료: 16900 / 수당: 179000 -->
+              </button>
+            </div>
+          </div>
+          <div class="item_calc">
+            <span class="txt_step">step2</span>
+            <strong class="tit_calc_2">비데 선택</strong>
+            <p class="desc_calc">종류별로 제일 잘 나가는 비데를 가져왔어요<br/>원하는 비데를 선택해주세요</p>
+            <div class="list_product" data-pick="bidet">
+              <button type="button" class="btn_product" data-rent="9900">
+                <div class="img_product img_product_CBT_L1031W"></div>
+                <span class="txt_product">가성비 비데</span>
+                <strong class="txt_name">인스퓨어 비데</strong>
+                <p class="desc_product_code">CBT-L1031W</p>
+                <!-- 5년약정 필터교체 6개월 1년단위 방문점검 기준 월렌탈료: 9900 / 수당: 95000 -->
+              </button>
+              <button type="button" class="btn_product" data-rent="13410">
+                <div class="img_product img_product_CBT_KFFS31RW"></div>
+                <span class="txt_product">고급형 리모컨 비데</span>
+                <strong class="txt_name">도기&노즐 자동살균 방수 비데</strong>
+                <p class="desc_product_code">CBT-KFFS31RW</p>
+                <!-- 5년약정 1년단위 방문점검 기준 월렌탈료: 13410 / 수당: 157000 -->
+              </button>
+            </div>
+          </div>
+          <div class="item_calc">
+            <span class="txt_step">step3</span>
+            <strong class="tit_calc_2">제휴카드 선택</strong>
+            <p class="desc_calc">최근 6개월 무실적 카드사의 제휴카드를 선택하고<br/>전월 사용 금액을 선택해주세요 (최대 2장)</p>
+            <div class="list_product list_card" data-pick="card">
+              <button type="button" class="btn_product" data-pay="40만원이상:22000|80만원이상:24000|160만원이상:27000">
+                <span class="txt_badge">추천카드</span>
+                <div class="img_product img_product_lotte"></div>
+                <strong class="txt_name">롯데카드</strong>
+                <p class="desc_period">72개월 할인적용</p>
+              </button>
+              <button type="button" class="btn_product" data-pay="30만원이상:20000|70만원이상:22000|120만원이상:25000">
+                <span class="txt_badge">추천카드</span>
+                <div class="img_product img_product_woori"></div>
+                <strong class="txt_name">우리카드</strong>
+                <p class="desc_period">72개월 할인적용</p>
+              </button>
+              <button type="button" class="btn_product" data-pay="30만원이상:20000|70만원이상:22000|120만원이상:24000">
+                <span class="txt_badge">추천카드</span>
+                <div class="img_product img_product_samsung"></div>
+                <strong class="txt_name">삼성카드</strong>
+                <p class="desc_period">60개월 할인적용</p>
+              </button>
+              <button type="button" class="btn_product" data-pay="30만원이상:15000|70만원이상:19000|150만원이상:30000">
+                <span class="txt_badge">최대할인</span>
+                <div class="img_product img_product_shinhan"></div>
+                <strong class="txt_name">신한카드</strong>
+                <p class="desc_period">60개월 할인적용</p>
+              </button>
+              <button type="button" class="btn_product" data-pay="40만원이상:13000|80만원이상:16000|120만원이상:19000">
+                <div class="img_product img_product_hyundai"></div>
+                <strong class="txt_name">현대카드</strong>
+                <p class="desc_period">60개월 할인적용</p>
+              </button>
+              <button type="button" class="btn_product" data-pay="30만원이상:20000|70만원이상:20000">
+                <div class="img_product img_product_kb"></div>
+                <strong class="txt_name">국민카드</strong>
+                <p class="desc_period">36개월 할인적용</p>
+              </button>
+              <button type="button" class="btn_product" data-pay="30만원이상:13000">
+                <div class="img_product img_product_hana"></div>
+                <strong class="txt_name">하나카드</strong>
+              </button>
+            </div>
+            <div class="list_monthlypay" hidden>
+              <strong class="tit_list_monthlypay">전월 카드 사용금액 선택</strong>
+              <div class="list_pay"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="section_fix">
+        <div class="box_selected" hidden>
+          <strong class="txt_bonus"><span class="txt_bonus_small">10월 내 계약 시</span>네이버포인트 <em class="txt_point">최대 20만원</em> 지원</strong>
+          <div class="inner_selected"></div>
+          <p class="desc_guide" hidden></p>
+        </div>
+        <div class="inner_fix">
+          <button type="button" class="item_fix btn_happycall">해피콜 신청</button>
+          <a href="tel:010-2324-6129" class="item_fix link_tel">전화상담</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="layer_happycall" hidden>
+      <div class="dim_happycall"></div>
+      <div class="sheet_happycall" role="dialog" aria-modal="true" aria-labelledby="tit_happycall">
+        <div class="head_sheet">
+          <strong class="tit_sheet" id="tit_happycall">해피콜 신청</strong>
+          <p class="desc_sheet">상담원이 확인 후 빠르게 연락드릴게요</p>
+          <button type="button" class="btn_close_sheet"><span class="screen_out">닫기</span></button>
+        </div>
+        <div class="body_sheet">
+          <form class="form_happycall" novalidate>
+            <div class="item_form">
+              <label class="tit_form" for="happycall_name">성함</label>
+              <input type="text" id="happycall_name" class="inp_form" name="name" placeholder="성함을 입력해주세요" autocomplete="name">
+              <p class="desc_error">성함을 입력해주세요</p>
+            </div>
+            <div class="item_form">
+              <label class="tit_form" for="happycall_tel">연락처</label>
+              <input type="tel" id="happycall_tel" class="inp_form" name="tel" placeholder="010-0000-0000" inputmode="numeric" maxlength="13" autocomplete="tel">
+              <p class="desc_error">연락처를 정확히 입력해주세요</p>
+            </div>
+            <div class="box_agree">
+              <label class="lab_agree">
+                <input type="checkbox" id="happycall_agree" class="inp_agree">
+                <span class="txt_agree">렌탈상담에 필요한 개인정보 수집 및 이용에 동의합니다</span>
+              </label>
+              <button type="button" class="btn_terms" aria-expanded="false" aria-controls="happycall_terms">전문보기</button>
+              <div class="box_terms" id="happycall_terms" hidden>1. 수집·이용하려는 개인정보의 항목
+이름, 휴대폰번호, 이메일 주소
+
+2. 수집 및 이용목적
+제품에 대한 온, 오프라인 상담
+
+3. 개인정보의 보유 및 이용기간
+원칙적으로, 고객의 동의 철회요청 시 해당 개인정보는 지체 없이 파기합니다.
+단, 관계법령의 규정에 의하여 보존할 필요가 있는 경우 회사는 아래와 같이 관계법령에서 정한 일정한 기간 동안 고객정보를 보관합니다.
+
+계약 또는 청약철회 등에 관한 기록: 5년 (전자상거래 등에서의 소비자보호에 관한 법률)
+대금결제 및 재화 등의 공급에 관한 기록: 5년 (전자상거래 등에서의 소비자보호에 관한 법률)
+소비자의 불만 또는 분쟁처리에 관한 기록: 3년 (전자상거래 등에서의 소비자보호에 관한 법률)
+*서비스 제공을 위해 필요한 최소한의 개인정보이므로 동의를 해 주셔야 서비스를 이용하실 수 있습니다.
+
+4. 동의 거부권 및 미동의에 대한 불이익 안내
+고객님께서는 개인정보 동의 거부권이 있으시며 동의 거부시 서비스를 이용하실 수 없습니다.서비스 제공을 위해 필요한 최소한의 개인정보이므로 동의를 해 주셔야 서비스를 이용하실 수 있습니다.</div>
+              <p class="desc_error">개인정보 수집 및 이용에 동의해주세요</p>
+            </div>
+            <button type="submit" class="btn_submit">신청하기</button>
+          </form>
+          <div class="box_done" hidden>
+            <strong class="tit_done">신청이 접수되었어요</strong>
+            <p class="desc_done">입력해주신 연락처로<br/>담당 상담원이 연락드릴게요</p>
+            <button type="button" class="btn_done">확인</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script>
+      var MAX_CARDS = 2;
+      var picks = { water: null, bidet: null };
+      var cards = [];          // 선택한 제휴카드 (최대 2장, 먼저 고른 것부터 밀려난다)
+      var payOf = new Map();   // 카드 -> 그 카드에서 고른 전월 실적 버튼
+
+      var summary = document.querySelector('.box_selected');
+      var summaryInner = document.querySelector('.inner_selected');
+      var summaryGuide = document.querySelector('.desc_guide');
+      var sectionCalc = document.querySelector('.section_calc');
+      var sectionFix = document.querySelector('.section_fix');
+      var cardList = document.querySelector('.list_card');
+      var payPanel = document.querySelector('.list_monthlypay');
+      var payList = document.querySelector('.list_pay');
+
+      // 목록 안에서 1개만 선택 - 선택된 버튼에 .on 을 붙인다
+      function markSelected(scope, itemSelector, isOn) {
+        scope.querySelectorAll(itemSelector).forEach(function (item) {
+          var on = isOn(item);
+          item.classList.toggle('on', on);
+          item.setAttribute('aria-pressed', on ? 'true' : 'false');
+        });
+      }
+
+      function bindSingleSelect(list, itemSelector, onSelect) {
+        list.addEventListener('click', function (e) {
+          var target = e.target.closest(itemSelector);
+          if (!target || !list.contains(target)) return;
+          markSelected(list, itemSelector, function (item) { return item === target; });
+          if (onSelect) onSelect(target);
+        });
+        markSelected(list, itemSelector, function () { return false; });
+      }
+
+      // 하단 고정바에 가리지 않게 화면 가운데로 부드럽게 이동시킨다
+      function scrollIntoViewSoftly(el) {
+        var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        requestAnimationFrame(function () {
+          el.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'center' });
+        });
+      }
+
+      // 하단 고정바가 커진 만큼만 본문 아래 여백을 늘린다
+      function syncBottomSpace() {
+        requestAnimationFrame(function () {
+          sectionCalc.style.paddingBottom = (sectionFix.offsetHeight + 24) + 'px';
+        });
+      }
+
+      // 다음 단계가 화면 위쪽에 오도록 이동
+      function scrollToStep(el) {
+        var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        requestAnimationFrame(function () {
+          window.scrollTo({
+            top: el.getBoundingClientRect().top + window.pageYOffset - 20,
+            behavior: reduce ? 'auto' : 'smooth'
+          });
+        });
+      }
+
+      function won(value) {
+        return Number(value || 0).toLocaleString();
+      }
+
+      // 요약바 썸네일 - 목록 이미지의 클래스를 그대로 물려받는다
+      function thumb(btn) {
+        var names = Array.prototype.filter.call(btn.querySelector('.img_product').classList, function (name) {
+          return name !== 'img_product';
+        });
+        var el = document.createElement('span');
+        el.className = 'img_selected ' + names.join(' ');
+        return el;
+      }
+
+      function operator(sign) {
+        var el = document.createElement('span');
+        el.className = 'txt_operator';
+        el.textContent = sign;
+        return el;
+      }
+
+      // 전월 실적까지 고른 카드만 '선택 완료'로 본다
+      function pickedCards() {
+        return cards.filter(function (card) { return payOf.get(card); });
+      }
+
+      function totalDiscount() {
+        return cards.reduce(function (sum, card) {
+          var chosen = payOf.get(card);
+          return sum + (chosen ? Number(chosen.dataset.discount) : 0);
+        }, 0);
+      }
+
+      // 정수기 + 비데 - 카드 - 카드 = 월 렌탈료
+      // 제품 2개를 다 고르기 전에는 요약바를 띄우지 않는다
+      function renderSummary() {
+        summary.hidden = !(picks.water && picks.bidet);
+        if (summary.hidden) {
+          summaryInner.innerHTML = '';
+          summaryGuide.hidden = true;
+          syncBottomSpace();
+          return;
+        }
+        var box = document.createDocumentFragment();
+        [picks.water, picks.bidet].forEach(function (btn) {
+          if (!btn) return;
+          if (box.childNodes.length) box.appendChild(operator('+'));
+          box.appendChild(thumb(btn));
+        });
+        var picked = pickedCards();
+        picked.forEach(function (card) {
+          if (box.childNodes.length) box.appendChild(operator('-'));
+          box.appendChild(thumb(card));
+        });
+        var total = Math.max(Number(picks.water.dataset.rent) + Number(picks.bidet.dataset.rent) - totalDiscount(), 0);
+        summaryInner.classList.toggle('on_zero', total === 0);
+
+        var price = document.createElement('strong');
+        price.className = 'txt_total';
+        price.textContent = '월 ' + won(total) + '원';
+        box.appendChild(operator('='));
+        box.appendChild(price);
+
+        summaryInner.innerHTML = '';
+        summaryInner.appendChild(box);
+
+        renderGuide(total, picked.length);
+        syncBottomSpace();
+      }
+
+      // 다음에 뭘 더 고르면 좋은지 한 줄로 안내한다
+      function renderGuide(total, pickedCount) {
+        var guide = '';
+        if (pickedCount === 0) {
+          guide = '제휴카드를 선택해 할인받아보세요';
+        } else if (pickedCount === 1 && total > 0) {
+          guide = '제휴카드를 하나 더 선택해 월렌탈료 <em class="txt_point">0원</em>을 만들어보세요';
+        }
+        summaryGuide.innerHTML = guide;
+        summaryGuide.hidden = !guide;
+      }
+
+      // step3 - 선택한 카드 수만큼 실적 선택지를 그린다 (카드별로 선택지가 다르다)
+      function renderPayOptions() {
+        payList.innerHTML = '';
+        cards.forEach(function (card) {
+          var group = document.createElement('div');
+          group.className = 'group_pay';
+          group.card = card;
+
+          var title = document.createElement('strong');
+          title.className = 'tit_group_pay';
+          title.textContent = card.querySelector('.txt_name').textContent;
+          group.appendChild(title);
+
+          (card.dataset.pay || '').split('|').forEach(function (option) {
+            var part = option.split(':');
+            if (part.length < 2) return;
+            var btn = document.createElement('button');
+            btn.type = 'button';
+            btn.className = 'btn_monthlypay';
+            btn.dataset.discount = part[1];
+            btn.setAttribute('aria-pressed', 'false');
+            btn.innerHTML = '<strong class="tit_monthlypay">' + part[0] + '</strong>'
+                          + '<p class="desc_monthlypay">-' + won(part[1]) + '원 할인</p>';
+            if (payOf.get(card) && payOf.get(card).dataset.discount === btn.dataset.discount) {
+              btn.classList.add('on');
+              btn.setAttribute('aria-pressed', 'true');
+              payOf.set(card, btn);
+            }
+            group.appendChild(btn);
+          });
+          payList.appendChild(group);
+        });
+        payPanel.hidden = !cards.length;
+      }
+
+      document.querySelectorAll('.list_product:not(.list_card)').forEach(function (list) {
+        var key = list.dataset.pick;
+        var nextStep = list.closest('.item_calc').nextElementSibling;
+        bindSingleSelect(list, '.btn_product', function (btn) {
+          picks[key] = btn;
+          renderSummary();
+          if (nextStep) scrollToStep(nextStep);
+        });
+      });
+
+      // 제휴카드는 2장까지 - 다시 누르면 해제, 꽉 차면 먼저 고른 카드가 빠진다
+      cardList.addEventListener('click', function (e) {
+        var card = e.target.closest('.btn_product');
+        if (!card || !cardList.contains(card)) return;
+        var index = cards.indexOf(card);
+        if (index > -1) {
+          cards.splice(index, 1);
+          payOf.delete(card);
+        } else {
+          if (cards.length >= MAX_CARDS) payOf.delete(cards.shift());
+          cards.push(card);
+        }
+        markSelected(cardList, '.btn_product', function (item) { return cards.indexOf(item) > -1; });
+        renderPayOptions();
+        renderSummary();
+        if (cards.length) scrollIntoViewSoftly(payPanel);
+      });
+      markSelected(cardList, '.btn_product', function () { return false; });
+
+      window.addEventListener('resize', syncBottomSpace);
+      syncBottomSpace();
+
+      // 실적은 카드(그룹)마다 1개씩 고른다
+      payList.addEventListener('click', function (e) {
+        var btn = e.target.closest('.btn_monthlypay');
+        if (!btn) return;
+        var group = btn.closest('.group_pay');
+        markSelected(group, '.btn_monthlypay', function (item) { return item === btn; });
+        payOf.set(group.card, btn);
+        renderSummary();
+      });
+
+      // ---- 해피콜 신청 바텀시트 ----
+      var happycall = document.querySelector('.layer_happycall');
+      var happycallForm = happycall.querySelector('.form_happycall');
+      var happycallDone = happycall.querySelector('.box_done');
+      var fieldName = happycall.querySelector('#happycall_name');
+      var fieldTel = happycall.querySelector('#happycall_tel');
+      var fieldAgree = happycall.querySelector('#happycall_agree');
+      var termsBtn = happycall.querySelector('.btn_terms');
+      var termsBox = happycall.querySelector('#happycall_terms');
+      var lastFocused = null;
+
+      function markError(el, hasError) {
+        el.closest('.item_form, .box_agree').classList.toggle('on_error', hasError);
+      }
+
+      function openHappycall() {
+        lastFocused = document.activeElement;
+        happycallForm.hidden = false;
+        happycallDone.hidden = true;
+        happycall.hidden = false;
+        document.body.style.overflow = 'hidden';
+        requestAnimationFrame(function () { fieldName.focus(); });
+      }
+
+      function closeHappycall() {
+        happycall.hidden = true;
+        document.body.style.overflow = '';
+        if (lastFocused) lastFocused.focus();
+      }
+
+      document.querySelector('.btn_happycall').addEventListener('click', openHappycall);
+      happycall.querySelector('.btn_close_sheet').addEventListener('click', closeHappycall);
+      happycall.querySelector('.dim_happycall').addEventListener('click', closeHappycall);
+      happycall.querySelector('.btn_done').addEventListener('click', closeHappycall);
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape' && !happycall.hidden) closeHappycall();
+      });
+
+      termsBtn.addEventListener('click', function () {
+        var opened = termsBtn.getAttribute('aria-expanded') === 'true';
+        termsBtn.setAttribute('aria-expanded', opened ? 'false' : 'true');
+        termsBox.hidden = opened;
+      });
+
+      // 010-1234-5678 형태로 자동 정리
+      fieldTel.addEventListener('input', function () {
+        var digits = fieldTel.value.replace(/[^0-9]/g, '').slice(0, 11);
+        var parts = digits.length < 4 ? [digits]
+                  : digits.length < 8 ? [digits.slice(0, 3), digits.slice(3)]
+                  : [digits.slice(0, 3), digits.slice(3, digits.length - 4), digits.slice(digits.length - 4)];
+        fieldTel.value = parts.filter(Boolean).join('-');
+        markError(fieldTel, false);
+      });
+      fieldName.addEventListener('input', function () { markError(fieldName, false); });
+      fieldAgree.addEventListener('change', function () { markError(fieldAgree, false); });
+
+      happycallForm.addEventListener('submit', function (e) {
+        e.preventDefault();
+        var invalid = null;
+        [
+          [fieldName, fieldName.value.trim().length > 0],
+          [fieldTel, /^01[016789]-\d{3,4}-\d{4}$/.test(fieldTel.value)],
+          [fieldAgree, fieldAgree.checked]
+        ].forEach(function (check) {
+          markError(check[0], !check[1]);
+          if (!check[1] && !invalid) invalid = check[0];
+        });
+        if (invalid) {
+          invalid.focus();
+          return;
+        }
+        sendHappycall({
+          name: fieldName.value.trim(),
+          tel: fieldTel.value,
+          agreedAt: new Date().toISOString()
+        });
+        happycallForm.hidden = true;
+        happycallDone.hidden = false;
+        happycall.querySelector('.body_sheet').scrollTop = 0;
+      });
+
+      // TODO: 실제 전송 연동 - 지금은 어디로도 보내지 않는다
+      function sendHappycall(data) {
+        console.log('[해피콜 신청]', data);
+      }
+    </script>
+  </body>
+</html>
